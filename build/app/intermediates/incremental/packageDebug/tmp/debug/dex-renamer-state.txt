@@ -1,0 +1,4 @@
+#Wed Jun 21 13:06:39 PKT 2023
+base.0=D\:\\Files\\seven-min-win-app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
