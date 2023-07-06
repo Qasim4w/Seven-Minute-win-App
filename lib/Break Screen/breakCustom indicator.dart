@@ -1,20 +1,14 @@
-import 'dart:async';
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:simple_speed_dial/simple_speed_dial.dart';
 
 class breakCustom_indicator extends StatelessWidget {
    double percent;
-  String data;
+   String data;
    breakCustom_indicator({required this.percent, required this.data});
 
   @override
   Widget build(BuildContext context) {
-
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: CircularPercentIndicator(
@@ -34,5 +28,4 @@ class breakCustom_indicator extends StatelessWidget {
     );
   }
 }
-
 //data == 7 ? Icon(Icons.add) :

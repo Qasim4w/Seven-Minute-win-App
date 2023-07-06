@@ -4,7 +4,7 @@
             "outputFile": "com.example.seven_min_track.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "D:\\Files\\seven-min-win-app\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "C:\\Users\\Abid Ali\\StudioProjects\\Seven-Minute-win-App\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

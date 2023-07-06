@@ -6,26 +6,26 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:seven_min_track/Pracitce/practice.dart';
 import 'package:seven_min_track/Provider/Home%20Provider.dart';
+import 'package:seven_min_track/view/splash_screen.dart';
 import 'Add Details/Add data.dart';
 import 'Home Screen/Home.dart';
 import 'Models/ProjectModel.dart';
 import 'Models/TimerModel.dart';
 
 void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    var directory = await getApplicationDocumentsDirectory();
-    Hive.init(directory.path);
+    // WidgetsFlutterBinding.ensureInitialized();
+    // var directory = await getApplicationDocumentsDirectory();
+    // Hive.init(directory.path);
+    //
+    // Hive.registerAdapter(AllProjectsListModelAdapter());
+    // Hive.registerAdapter(TimerTracksModelAdapter());
 
-    Hive.registerAdapter(AllProjectsListModelAdapter());
-    Hive.registerAdapter(TimerTracksModelAdapter());
-
-    await Hive.openBox<AllProjectsListModel>('list Box');
-    await Hive.openBox<TimerTracksModel>('counterBox');
-
+    // await Hive.openBox<AllProjectsListModel>('list Box');
+    // await Hive.openBox<TimerTracksModel>('counterBox');
 
     runApp(
     ChangeNotifierProvider(
-    create: (context) => home_provider(),
+    create: (context) => TimerProvider(),
         child: const MyApp()));
 }
 
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: data(),
+          home: SplashLogo(),
         );
       },
     );

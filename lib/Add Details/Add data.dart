@@ -7,6 +7,7 @@ import 'package:seven_min_track/Pracitce/practice.dart';
 
 import '../Boxes/boxes.dart';
 import '../Models/ProjectModel.dart';
+import '../view/lets_go.dart';
 
 class data extends StatefulWidget {
   const data({Key? key}) : super(key: key);
@@ -51,8 +52,8 @@ class _dataState extends State<data> {
                     controller: projectControler,
                     decoration: InputDecoration(
                       filled: true,
-                       fillColor: Colors.white.withOpacity(.3),
-                       enabled: true,
+                      fillColor: Colors.white.withOpacity(.3),
+                      enabled: true,
                       border: OutlineInputBorder(
                         // borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(15.r),
@@ -63,7 +64,7 @@ class _dataState extends State<data> {
                   ),
                 ),
 
-                 SizedBox(height: 25.h),
+                SizedBox(height: 25.h),
                 /// title TextField
                 SizedBox(
                   height: 50.h,
@@ -75,7 +76,7 @@ class _dataState extends State<data> {
                       fillColor: Colors.white.withOpacity(.3),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.r),
-                          // borderSide: BorderSide.none,
+                        // borderSide: BorderSide.none,
                       ),
                       hintText: 'title',
                       hintStyle: TextStyle(fontFamily: 'RobotoMono-Regular',fontSize: 15.sp,color: Colors.black),
@@ -97,8 +98,8 @@ class _dataState extends State<data> {
                       fillColor: Colors.white.withOpacity(.3),
                       enabled: true,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.r),
-                          // borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(15.r),
+                        // borderSide: BorderSide.none,
                       ),
                       hintText: 'note',
                       hintStyle: TextStyle(fontFamily: 'RobotoMono-Regular',fontSize: 15.sp,color: Colors.black),
@@ -110,20 +111,21 @@ class _dataState extends State<data> {
                 /// add project button
                 GestureDetector(
                   onTap: (){
-                    Get.to(practice());
-                    final data =
-                    AllProjectsListModel(
-                        projectName: projectControler.text,
-                        title: titleControler.text,
-                        description: descriptionControler.text
-                    );
-                    var box = Boxes.getData1();
-                    box.add(data);
-                    data.save();
-                    print(data.toString());
-                    projectControler.clear();
-                    titleControler.clear();
-                    descriptionControler.clear();
+                  //  Get.to(LetsGoScreen());
+                    Get.offAll(() => LetsGoScreen());
+                   // final data =
+                    // AllProjectsListModel(
+                    //     projectName: projectControler.text,
+                    //     title: titleControler.text,
+                    //     description: descriptionControler.text
+                    // );
+                    // var box = Boxes.getData1();
+                 //   box.add(data);
+                 //   data.save();
+                 //    print(data.toString());
+                 //    projectControler.clear();
+                 //    titleControler.clear();
+                 //    descriptionControler.clear();
                   },
                   child: Container(
                     height: 60.h,

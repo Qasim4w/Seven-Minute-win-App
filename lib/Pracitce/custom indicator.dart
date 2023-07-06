@@ -9,11 +9,12 @@ import 'package:simple_speed_dial/simple_speed_dial.dart';
 
 class custom_indicator extends StatefulWidget {
 
-   double percent;
+  double percent;
   String? data;
+  Color color;
   // Widget? Trophy;
   bool trophy ;
-   custom_indicator({required this.percent,this.data,required this.trophy});
+  custom_indicator({required this.percent,this.data,required this.trophy,required this.color});
 
   @override
   State<custom_indicator> createState() => _custom_indicatorState();
@@ -26,27 +27,33 @@ class _custom_indicatorState extends State<custom_indicator> {
       isPlaying = !isPlaying;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: CircularPercentIndicator(
         radius: 20.0,
-        backgroundColor: Colors.white,
+        backgroundColor: widget.color,
         progressColor: Colors.white,
-        lineWidth: 4.0,
+        lineWidth: 6.0,
         percent: widget.percent,
-        center: widget.trophy ? Icon(Icons.wine_bar_sharp,color: Colors.yellowAccent,)
-            : Text('0',
+        center: widget.trophy
+            ? Icon(
+          Icons.wine_bar_sharp,
+          color: Colors.yellowAccent,
+        )
+            : widget.data != null
+            ? Text(
+          widget.data!,
           style: TextStyle(
             color: Colors.white,
             fontFamily: 'RobotoMono-Regular',
             fontSize: 20.0.sp,
           ),
-        ),
+        )
+            : SizedBox(), // Hide the center if data is null
       ),
     );
   }
 }
-
-//data == 7 ? Icon(Icons.add) :

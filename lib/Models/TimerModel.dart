@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:hive/hive.dart';
 part 'TimerModel.g.dart';
 
