@@ -194,6 +194,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///C:/src/flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "frontend_server_client",
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/frontend_server_client-3.2.0",
       "packageUri": "lib/",
@@ -238,6 +244,12 @@
     {
       "name": "http_parser",
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.17.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -302,6 +314,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "otp_text_field",
+      "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/otp_text_field-1.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "package_config",
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/package_config-2.1.0",
       "packageUri": "lib/",
@@ -354,6 +372,12 @@
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/percent_indicator-4.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "pinput",
+      "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/pinput-2.2.31",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "platform",
@@ -422,6 +446,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "smart_auth",
+      "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/smart_auth-1.0.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "source_gen",
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/source_gen-1.2.7",
       "packageUri": "lib/",
@@ -442,6 +472,12 @@
     {
       "name": "stack_trace",
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "stepper_list_view",
+      "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/stepper_list_view-0.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -488,6 +524,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "universal_platform",
+      "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/universal_platform-1.0.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///C:/Users/Abid%20Ali/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -530,7 +572,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-07-06T05:25:34.201294Z",
+  "generated": "2023-07-08T07:54:39.095638Z",
   "generator": "pub",
   "generatorVersion": "3.0.3"
 }

@@ -3,23 +3,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:seven_min_track/Add%20Details/Add%20data.dart';
-import 'package:simple_speed_dial/simple_speed_dial.dart';
-import '../Break Screen/Break.dart';
+import 'package:seven_min_track/view/Home%20Screen/home_screen.dart';
 import '../Provider/Home Provider.dart';
+import '../utils/app_colors.dart';
+import 'Break Screen/Break.dart';
 
 class LetsGoScreen extends StatelessWidget {
   const LetsGoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-  //  print('build ');
-    TimerProvider timerProvider = Provider.of<TimerProvider>(context,);
-    //  print('Seconds are ${timerProvider.seconds}');
-  //  timerProvider.resetTrophy();
+   print('build ');
+    TimerProvider timerProvider = Provider.of<TimerProvider>(context,listen: false);
 
+    ///build method is calling every second and showing issue of setState() or markNeedsBuild() called during build.
+    /// because of TimerProvider timerProvider = Provider.of<TimerProvider>(context,listen: true); make listen false ok.
+
+    //  print('Seconds are ${timerProvider.seconds}');
+    // timerProvider.resetTrophy();
     return Scaffold(
-        backgroundColor: Color(0xFFEE616A),
+        backgroundColor: AppColors.primaryColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -30,14 +33,6 @@ class LetsGoScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
 
-                    // GestureDetector(
-                    //     onTap: (){
-                    //     // Get.to(()=> data());
-                    //       // timerProvider.isLock =! timerProvider.isLock;
-                    //       // print(timerProvider.isLock);
-                    //     },
-                    //     child: Icon(Icons.lock_open,color: Colors
-
                     GestureDetector(
                         onTap: (){
                            timerProvider.removeAllIndicators();
@@ -46,158 +41,206 @@ class LetsGoScreen extends StatelessWidget {
                            timerProvider.selectedIndex == 0;
                            timerProvider.resetTrophy();
 
-                           Get.to(()=>data());
-                         // Get.offAll(() => data());
-
+                           Get.to(()=>HomeScreen());
                         },
-                        child: Text('Save',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500,color: Colors.white,fontFamily: 'Tillana-Bold'),))
+                        child: Text('Save',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w300,color: Colors.white,fontFamily: 'Tillana-Bold'),))
                   ],
                 ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('7',style: TextStyle(fontSize: 120,fontWeight: FontWeight.w500,color: Colors.white,fontFamily: 'Tillana-Bold'),),
+                    Text('7',style: TextStyle(fontSize: 120,fontWeight: FontWeight.w200,color: Colors.white,fontFamily: 'Tillana-Bold'),),
                     SizedBox(width: 10,),
 
                     Column(
                       children: [
-                        Text('min',style: TextStyle(fontSize: 40,fontWeight: FontWeight.w500,color: Colors.white,fontFamily: 'Tillana-Bold'),),
-                        Text('win',style: TextStyle(fontSize: 40,fontWeight: FontWeight.w500,color: Colors.white,fontFamily: 'Tillana-Bold'),),
+                        Text('min',style: TextStyle(fontSize: 40,fontWeight: FontWeight.w200,color: Colors.white,fontFamily: 'Tillana-Bold'),),
+                        Text('win',style: TextStyle(fontSize: 40,fontWeight: FontWeight.w200,color: Colors.white,fontFamily: 'Tillana-Bold'),),
 
                       ],
                     ),
-
                   ],
                 ),
-
                 SizedBox(height: 40,),
 
-                Container(
-                  height: 300,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      TimerTracksModel data = TimerTracksModel(start: timerProvider.startValue, minute: 0); // Set timer for 7 minutes
+                Consumer<TimerProvider>(builder: (context,_,timer){
+                  return Container(
+                    height: 300,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        TimerTracksModel data = TimerTracksModel(start: timerProvider.startValue, minute: 0); // Set timer for 7 minutes
 
-                      int totalSeconds = data.minute * 60 + data.start;
+                        int totalSeconds = data.minute * 60 + data.start;
 
-                      double currentProgress = timerProvider.getCurrentProgress(totalSeconds);
+                        double currentProgress = timerProvider.getCurrentProgress(totalSeconds);
 
-                      if (!timerProvider.isPlaying || timerProvider.seconds >= totalSeconds) {
-                        // Timer has completed or not playing, perform any required actions here
-                        timerProvider.pauseTimer();
-                        timerProvider.setSeconds(0); // Reset the timerValue
-                        timerProvider.isPlaying = false; // Stop playing
-                      }
+                        if (!timerProvider.isPlaying || timerProvider.seconds >= totalSeconds) {
+                          // Timer has completed or not playing, perform any required actions here
+                          timerProvider.pauseTimer();
+                          //  timerProvider.setSeconds(0); // Reset the timerValue
+                          timerProvider.isPlaying = false; // Stop playing
+                        }
 
-                      int minutes = (timerProvider.seconds ~/ 60); // Calculate minutes based on timerValue
-                      if (minutes < 0) {
-                        minutes = 0;
-                      }
-
-                      return Container(
-                        height: 100,
-                        child: CircularPercentIndicator(
-                          circularStrokeCap: CircularStrokeCap.round,
-                          arcBackgroundColor: Colors.white.withOpacity(.20),
-                          arcType: ArcType.FULL,
-                          radius: 140,
-                          animation: false,
-                          progressColor: Colors.white,
-                          lineWidth: 20.0,
-                          percent: currentProgress,
-                          center: Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Column(
-                              children: [
-                                Text(
-                                  minutes.toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'RobotoMono-Bold',
-                                    fontSize: 130,
-                                  ),
-                                ),
-                                SizedBox(height: 25),
-                                 Container(
-                                  height: 40,
-                                  width: 145,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(width: 5, color: Color(0xFFEE616A)),
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                        int minutes = (timerProvider.seconds ~/ 60); // Calculate minutes based on timerValue
+                        if (minutes < 0) {
+                          minutes = 0;
+                        }
+                        return Container(
+                          height: 100,
+                          child: CircularPercentIndicator(
+                            circularStrokeCap: CircularStrokeCap.round,
+                            arcBackgroundColor: Colors.white.withOpacity(.20),
+                            arcType: ArcType.FULL,
+                            radius: 140,
+                            animation: false,
+                            progressColor: Colors.white,
+                            lineWidth: 10.0,
+                            percent: currentProgress,
+                            center: Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child:
+                              Consumer<TimerProvider>(
+                                  builder: (context,_,TimerProvider){
+                                    return Column(
                                       children: [
-                                        SizedBox(width: 5),
                                         Text(
-                                          '${timerProvider.seconds}s / $totalSeconds',
+                                          minutes.toString(),
                                           style: TextStyle(
-                                            color: Color(0xFFEE616A),
-                                            fontFamily: 'RobotoMono-Italic',
-                                            fontSize: 20.0,
+                                              color: Colors.white,
+                                              fontFamily: 'RobotoMono-Bold',
+                                              fontSize: 130,
+                                              fontWeight: FontWeight.w200
+                                          ),
+                                        ),
+                                        SizedBox(height: 25),
+                                        Container(
+                                          height: 40,
+                                          width: 145,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(width: 5, color: AppColors.primaryColor),
+                                            borderRadius: BorderRadius.circular(100),
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  '${timerProvider.seconds}s / ${totalSeconds}s',
+                                                  style: TextStyle(
+                                                    color: AppColors.primaryColor,
+                                                    fontFamily: 'RobotoMono-Italic',
+                                                    fontSize: 19.0,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                    );
+                                  }
+                              ),
+
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-
-                /// The null check Operator is here
-                /// i think because the trophy and percent
-                /// are not given
-
-                Consumer<TimerProvider>(builder: (context,timerProvider,_){
-                  return SizedBox(
-                    height: 100.h,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: timerProvider.progressList.length,
-                      itemBuilder: (context, index) {
-                        int progressTotalSeconds = 60; // Set the total seconds to 60 for each indicator
-
-                        timerProvider.updateProgress(index, progressTotalSeconds,);
-
-                        double progressCurrentProgress = 0.0; // Default progress for previous indices
-                        bool trophy = index <= timerProvider.selectedIndex; // Trophy is true for previous and current indices
-
-                        if (index <= timerProvider.selectedIndex) {
-                          // Calculate the elapsed time for the current index
-                          int elapsedTime = timerProvider.seconds - (progressTotalSeconds * index);
-
-                          // Calculate the progress for the current index
-                          progressCurrentProgress = elapsedTime / progressTotalSeconds;
-                          progressCurrentProgress = progressCurrentProgress.clamp(0.0, 1.0); // Clamp the value between 0.0 and 1.0
-                        }
-
-                        return SmallIndicator(
-                          color: trophy ? Colors.amber : Colors.white,
-                          percent: progressCurrentProgress,
-                          trophy: trophy,
                         );
                       },
                     ),
                   );
                 }),
 
-                /// Add button
-                /// Add button
 
+                /// The null check Operator is here
+                /// i think because the trophy and percent
+                /// are not given
+                // Consumer<TimerProvider>(builder: (context, timerProvider, _) {
+                //   return
+                //
+                // }),
+                Consumer<TimerProvider>(builder: (context,_,timer)
+                {
+                  return SizedBox(
+                    height: 100.h,
+                    width: double.infinity,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: List.generate(
+                        timerProvider.progressList.length > 0 ? timerProvider.progressList.length : 1, // Check if progressList is empty
+                            (index) {
+                          int progressTotalSeconds = 60; // Set the total seconds to 60 for each indicator
+
+                          timerProvider.updateProgress(index, progressTotalSeconds);
+
+                          double progressCurrentProgress = 0.0; // Default progress for previous indices
+                          bool trophy = index <= timerProvider.selectedIndex; // Trophy is true for previous and current indices
+
+                          if (index <= timerProvider.selectedIndex) {
+                            // Calculate the elapsed time for the current index
+                            int elapsedTime = timerProvider.seconds - (progressTotalSeconds * index);
+
+                            // Calculate the progress for the current index
+                            progressCurrentProgress = elapsedTime / progressTotalSeconds;
+                            progressCurrentProgress = progressCurrentProgress.clamp(0.0, 1.0); // Clamp the value between 0.0 and 1.0
+                          }
+
+                          return SmallIndicator(
+                            //color: trophy ? Colors.amber : Colors.white,
+                            percent: progressCurrentProgress,
+                            trophy: trophy,
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                }),
+
+
+                // Consumer<TimerProvider>(builder: (context,timerProvider,_){
+                //   return SizedBox(
+                //     height: 100.h,
+                //     width: double.infinity,
+                //     child: ListView.builder(
+                //       scrollDirection: Axis.horizontal,
+                //       itemCount: timerProvider.progressList.length,
+                //       itemBuilder: (context, index) {
+                //         int progressTotalSeconds = 60; // Set the total seconds to 60 for each indicator
+                //
+                //         timerProvider.updateProgress(index, progressTotalSeconds,);
+                //
+                //         double progressCurrentProgress = 0.0; // Default progress for previous indices
+                //         bool trophy = index <= timerProvider.selectedIndex; // Trophy is true for previous and current indices
+                //
+                //         if (index <= timerProvider.selectedIndex) {
+                //           // Calculate the elapsed time for the current index
+                //           int elapsedTime = timerProvider.seconds - (progressTotalSeconds * index);
+                //
+                //           // Calculate the progress for the current index
+                //           progressCurrentProgress = elapsedTime / progressTotalSeconds;
+                //           progressCurrentProgress = progressCurrentProgress.clamp(0.0, 1.0); // Clamp the value between 0.0 and 1.0
+                //         }
+                //
+                //         return SmallIndicator(
+                //           color: trophy ? Colors.amber : Colors.white,
+                //           percent: progressCurrentProgress,
+                //           trophy: trophy,
+                //         );
+                //       },
+                //     ),
+                //   );
+                // }),
+                //
+                /// Add button
+                /// Add button
+              SizedBox(height: 40.w,),
               Container(
               width: 290,
               child: Row(
@@ -214,7 +257,6 @@ class LetsGoScreen extends StatelessWidget {
                         } else {
                           timerProvider.pauseTimer();
                         }
-
                       },
                       child: Icon(Icons.free_breakfast,color: Colors.white,size: 25,)),
 
@@ -233,7 +275,7 @@ class LetsGoScreen extends StatelessWidget {
                       ),
                       child: Icon(
                         Icons.add,
-                        color: Color(0xFFEE616A),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ):
@@ -261,12 +303,12 @@ class LetsGoScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(timerProvider.isPlaying ? Icons.pause : Icons.play_arrow,color: Color(0xFFEE616A),),
+                              Icon(timerProvider.isPlaying ? Icons.pause : Icons.play_arrow,color: AppColors.primaryColor,),
                               Text(
                                 "Play",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xFFEE616A),
+                                  color: AppColors.primaryColor,
                                   fontFamily: 'RobotoMono-Bold',
                                 ),
                               ),
@@ -292,7 +334,7 @@ class LetsGoScreen extends StatelessWidget {
                       ),
                       child: Icon(
                         Icons.remove,
-                        color: Color(0xFFEE616A),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ):
@@ -364,63 +406,37 @@ class LetsGoScreen extends StatelessWidget {
         //   ),
         // ),
 
-      );
+    );
   }
 }
-
 class SmallIndicator extends StatelessWidget {
+  final double percent;
+  final bool trophy;
 
-  double percent;
-  Color color ;
-  bool trophy ;
-  SmallIndicator({super.key,required this.color,required this.percent,required this.trophy});
+  SmallIndicator({Key? key, required this.percent, required this.trophy});
 
   @override
   Widget build(BuildContext context) {
+    final color = trophy ? Colors.amber : Colors.white;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: CircularPercentIndicator(
         radius: 20.0,
         backgroundColor: color,
         progressColor: Colors.white,
-        lineWidth: 6.0,
+        lineWidth: 3.0,
         percent: percent,
         center: trophy
             ? Icon(
           Icons.wine_bar_sharp,
-          color: Colors.yellowAccent,
+          color: Colors.white,
         )
             : SizedBox(), // Hide the center if data is null
       ),
     );
   }
 }
-
-// Widget smallIndicator(
-//     {
-//       double ?percent,
-//       Color ?color,
-//       bool ?trophy = false,
-//     }
-//     ){
-//   return
-//     Padding(
-//     padding: EdgeInsets.symmetric(horizontal: 8.w),
-//     child: CircularPercentIndicator(
-//       radius: 20.0,
-//       backgroundColor: color!,
-//       progressColor: Colors.white,
-//       lineWidth: 6.0,
-//       percent: percent!,
-//       center: trophy!
-//           ? Icon(
-//         Icons.wine_bar_sharp,
-//         color: Colors.yellowAccent,
-//       )
-//           : SizedBox(), // Hide the center if data is null
-//     ),
-//   );
-
 
 /// Model
 class TimerTracksModel {

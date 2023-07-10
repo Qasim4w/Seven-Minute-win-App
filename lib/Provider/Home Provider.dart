@@ -80,19 +80,26 @@ class TimerProvider extends ChangeNotifier {
 
   void addIndicatorAtIndex(int index) {
     progressList.insert(index, TimerTracksModel(start: startValue, minute: 1));
-    notifyListeners();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
+
 
   IconData getPlayPauseIcon() {
     return isPlaying ? Icons.pause : Icons.play_arrow;
   }
 
   void addIndicator() {
-    int index = progressList.length;
-    addIndicatorAtIndex(index);
-    startValue += 60;
-    notifyListeners();
+    if (progressList.length < 7) {
+      int index = progressList.length;
+      addIndicatorAtIndex(index);
+      startValue += 60;
+      notifyListeners();
+    }
   }
+
 
   void removeIndicator() {
     if (progressList.isNotEmpty) {
@@ -122,18 +129,33 @@ class TimerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // void togglePlayPause() {
+  //   isPlaying = !isPlaying;
+  //   if (isPlaying) {
+  //     if (timer == null || !timer!.isActive) {
+  //       startTimer();
+  //     }
+  //   } else {
+  //     pauseTimer();
+  //   }
+  //   notifyListeners(); // Notify listeners after updating the isPlaying property
+  // }
   void togglePlayPause() {
     isPlaying = !isPlaying;
     if (isPlaying) {
       if (timer == null || !timer!.isActive) {
-        startTimer();
+        if (progressList.length > 0) {
+          startTimer();
+        } else {
+          addIndicator(); // Add at least one indicator if the list is empty
+          startTimer();
+        }
       }
     } else {
       pauseTimer();
     }
     notifyListeners(); // Notify listeners after updating the isPlaying property
   }
-
   void pauseTimer() {
     timer?.cancel();
   }

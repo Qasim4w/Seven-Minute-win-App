@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:seven_min_track/Pracitce/practice.dart';
 import 'package:seven_min_track/Provider/Home%20Provider.dart';
-import 'package:seven_min_track/view/splash_screen.dart';
-import 'Add Details/Add data.dart';
-import 'Home Screen/Home.dart';
-import 'Models/ProjectModel.dart';
-import 'Models/TimerModel.dart';
+import 'package:seven_min_track/Provider/signup_provider.dart';
+import 'package:seven_min_track/view/auth/login_screen.dart';
+import 'package:seven_min_track/view/lets_go.dart';
 
 void main() async {
     // WidgetsFlutterBinding.ensureInitialized();
@@ -22,11 +17,13 @@ void main() async {
 
     // await Hive.openBox<AllProjectsListModel>('list Box');
     // await Hive.openBox<TimerTracksModel>('counterBox');
-
     runApp(
-    ChangeNotifierProvider(
-    create: (context) => TimerProvider(),
-        child: const MyApp()));
+      MultiProvider(providers: [
+      ChangeNotifierProvider<TimerProvider>(create: (context)=> TimerProvider()),
+      ChangeNotifierProvider<SignUpProvider>(create: (context)=> SignUpProvider()),
+
+      ],
+          child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +38,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SplashLogo(),
+          home: LoginScreen(),
         );
       },
     );

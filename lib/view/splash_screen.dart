@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'Add Details/Add data.dart';
 
-import '../Add Details/Add data.dart';
 class SplashLogo extends StatefulWidget {
   @override
   State<SplashLogo> createState() => _SplashLogoState();
@@ -13,7 +12,7 @@ class _SplashLogoState extends State<SplashLogo> {
 
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Get.to(() => data());
+      Get.to(() => CreateTask());
     });
     super.initState();
   }
