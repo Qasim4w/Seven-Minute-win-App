@@ -4,17 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:seven_min_track/widgets/custom_text_widgets.dart';
 
 import '../../utils/app_colors.dart';
 
-class breakScreen extends StatefulWidget {
-  const breakScreen({Key? key}) : super(key: key);
+class BreakScreen extends StatefulWidget {
+  const BreakScreen({Key? key}) : super(key: key);
 
   @override
-  State<breakScreen> createState() => _breakScreenState();
+  State<BreakScreen> createState() => _BreakScreenState();
 }
 
-class _breakScreenState extends State<breakScreen> {
+class _BreakScreenState extends State<BreakScreen> {
 
   int change = 0;
   var selectedIndex = 0;
@@ -97,127 +98,174 @@ class _breakScreenState extends State<breakScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+    //  backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
-        child: SafeArea(
+        child: Container(
+        height: Get.height,
+          decoration: BoxDecoration(
+           color: Colors.orangeAccent[200],
+          //   gradient: LinearGradient(
+          //     colors: [AppColors.blue, AppColors.lightgreen],
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight,
+          //   ),
+          ),
           child: Column(
             children: [
-              SizedBox(height: 50.h,),
+              SizedBox(height: 80.h,),
 
               /// short break text
 
-              Padding(
-                padding:  EdgeInsets.only(left: 0.w,top: 0.h),
-                child: Text(
-                  'Short Break',
-                  style: TextStyle(
-                      fontSize: 40.sp,
-                      color: Colors.white,
-                      fontFamily: 'RobotoMono-Regular'),
-                ),
-              ),
+              customTextRegular(title: "Short Break",fontSize: 34.h,color: Colors.white),
 
               /// Timer
-              SizedBox(height: 25,),
-              CircularPercentIndicator(
-                circularStrokeCap: CircularStrokeCap.round,
-                arcBackgroundColor: Colors.white.withOpacity(.20),
-                arcType: ArcType.FULL,
-                radius: 140,
-                animation: false,
-                progressColor: Colors.white,
-                lineWidth: 16.0,
-                percent: timerValue,
-                center: Padding(
-                  padding: const EdgeInsets.only(top: 45),
-                  child: Column(
-                    children: [
-                      Text(
-                         minute1.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'RobotoMono-Bold',
-                          fontSize: 130.0.sp,
-                        ),
-                      ),
-
-                      SizedBox(height: 35.h),
-                      Container(
-                        height: 30,
-                        width: 135,
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          border: Border.all(width: 1.w, color: Colors.white,),
-                          borderRadius: BorderRadius.circular(100.r),
-                        ),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                _start.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25.0.sp,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                              SizedBox(width: 5,),
-                              Text('Seconds',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'RobotoMono-Italic',
-                                  fontSize: 20.sp,
-                                ),
-                              ),
-                            ],
+             SizedBox(height: 40,),
+              Container(
+               //  color: Colors.red,
+               //   height: 340.h,
+                width: Get.width,
+                child: CircularPercentIndicator(
+                  circularStrokeCap: CircularStrokeCap.round,
+                  arcBackgroundColor: Colors.white.withOpacity(.20),
+                  arcType: ArcType.FULL,
+                  radius: 140,
+                  animation: false,
+                  progressColor: Colors.white,
+                  lineWidth: 8.0,
+                  percent: timerValue,
+                  center: Container(
+                    padding: const EdgeInsets.only(top: 45),
+                    child: Column(
+                      children: [
+                        Text(
+                           minute1.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'RobotoMono-Bold',
+                            fontSize: 130.0.sp,
                           ),
                         ),
-                      ),
-                    ],
+
+                        SizedBox(height: 50.h),
+                        Container(
+                         height: 40,
+                          width: 145,
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            border: Border.all(width: 1.w, color: Colors.white,),
+                            borderRadius: BorderRadius.circular(100.r),
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _start.toString(),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25.0.sp,
+                                    fontWeight: FontWeight.w500
+                                  ),
+                                ),
+                                SizedBox(width: 5,),
+                                Text('Seconds',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'RobotoMono-Italic',
+                                    fontSize: 20.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
 
               /// Buttons in Row
-
-              SizedBox(height: 300.h,),
+             Spacer(),
+           //   SizedBox(height: 260.h,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (progressList.isNotEmpty || progressList.length < 1 ) {
-                        setState(() {
-                          progressList.add(0.0);
-                          _timer!.isActive ? stop() : startTimer();
-                          _togglePlayPause();
-                        });
-                      }
-                    },
-                    child: Container(
-                      height: 60.h,
-                      width: 150.w,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50.r)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _isPlaying
-                              ? Icon(Icons.pause, color: AppColors.primaryColor,size: 25.sp,)
-                              : Icon(Icons.play_arrow, color: AppColors.primaryColor,size: 25.sp,),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     if (progressList.isNotEmpty || progressList.length < 1 ) {
+                  //       setState(() {
+                  //         progressList.add(0.0);
+                  //         _timer!.isActive ? stop() : startTimer();
+                  //         _togglePlayPause();
+                  //       });
+                  //     }
+                  //   },
+                  //   child: Container(
+                  //     height: 40,
+                  //     width: 120,
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.white,
+                  //         borderRadius: BorderRadius.circular(50.r)),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //       children: [
+                  //         _isPlaying
+                  //             ? Icon(Icons.pause, color: AppColors.primaryColor,size: 25.sp,)
+                  //             : Icon(Icons.play_arrow, color: AppColors.primaryColor,size: 25.sp,),
+                  //
+                  //        _isPlaying
+                  //             ? Text('pause',style: TextStyle(color: AppColors.primaryColor, fontFamily: 'RobotoMono-Regular', fontSize: 22.sp,),)
+                  //             : Text('play',style: TextStyle(color: AppColors.primaryColor, fontFamily: 'RobotoMono-Regular', fontSize: 22.0.sp,),)
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
 
-                         _isPlaying
-                              ? Text('pause',style: TextStyle(color: AppColors.primaryColor, fontFamily: 'RobotoMono-Regular', fontSize: 22.sp,),)
-                              : Text('play',style: TextStyle(color: AppColors.primaryColor, fontFamily: 'RobotoMono-Regular', fontSize: 22.0.sp,),)
+                  Container(
+
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    height: 40,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      // gradient: LinearGradient(
+                      //   colors: [Color(0xffED631C), Color(0xffED631C).withOpacity(0.40)],
+                      //   begin: Alignment.topLeft,
+                      //   end: Alignment.bottomRight,
+                      // ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                      if (progressList.isNotEmpty || progressList.length < 1 ) {
+                          setState(() {
+                          progressList.add(0.0);
+                             _timer!.isActive ? stop() : startTimer();
+                           _togglePlayPause();
+                             });
+                             }
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(_isPlaying ? Icons.pause : Icons.play_arrow,color: Colors.black,),
+                          Text(
+                            "Play",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontFamily: 'RobotoMono-Bold',
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
+              SizedBox(height: 118.h,),
             ],
           ),
         ),

@@ -1,288 +1,260 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:stepper_list_view/stepper_list_view.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/custom_text_widgets.dart';
+import '../hidve_database/create_project.dart';
+import '../hidve_database/date_model.dart';
+import '../hidve_database/existing_data.dart';
 
 class ProjectDetail extends StatefulWidget {
-  const ProjectDetail({super.key, });
+  String title;
 
+  ProjectDetail({super.key, required this.title});
 
   @override
   State<ProjectDetail> createState() => _ProjectDetailState();
 }
 
 class _ProjectDetailState extends State<ProjectDetail> {
+  late Box<DataModel> box; // Declare the box variable
+  late Box<DateModel> boxx; // Declare the box variable
 
-  // DateTime now = DateTime.now();
-  // String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+  @override
+  void initState() {
+    super.initState();
 
-  // print(formattedDateTime);
+    // box = Hive.box<Project>(projectBoxName); // Initialize the box variable
+    // boxx = Hive.box<DateModel>('dateBox');
 
-  final _stepperData = List.generate(10, (index) =>
-      StepperItemData(
-    id: '$index',
-    content: ({
-      'name': 'Subhash Chandra Shukla',
-      'occupation': 'Flutter Development',
-      'mobileNumber': '7318459902',
-      'email': 'subhashchandras7318@gmail.com',
-      'born_date': '12\nAug',
-      "contact_list": {
-        "LinkedIn": "https://www.linkedin.com/in/subhashcs/",
-        "Portfolio": "https://subhashdev121.github.io/subhash/#/",
-      }
-    }),
-    avatar: 'https://avatars.githubusercontent.com/u/70679949?v=4',
-  )).toList();
+    box = Hive.box<DataModel>('dataBox');
+    boxx = Hive.box<DateModel>('dateBox');
+    // openHiveBox(); // Call the method to open the Hive box
+  }
+
+  Future<void> openHiveBox() async {
+    box = await Hive.openBox<DataModel>('dataBox');
+  }
+
+  int currentIndex = 1;
+  DateModel? _dateModel;
+
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
-    final theme = Theme.of(context);
+    final List<DataModel> projects = box.values.toList();
+    final List<DateModel> DateModelData = boxx.values.toList();
+    print('date is ${_dateModel?.date}');
+    // print('The currentIndex is ${ DateModelData.isNotEmpty ? DateModelData[0].currentIndex : 0}');
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
         title: Text(
-          "Joy App UI",
+          widget.title,
           style: const TextStyle(
             color: Colors.white,
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: StepperListView(
-          showStepperInLast: true,
-          stepperData: _stepperData,
-          stepAvatar: (_, data) {
-            final stepData = data as StepperItemData;
-            return PreferredSize(
-              preferredSize: const Size.fromRadius(20),
-              child: CircleAvatar(
-                backgroundColor: AppColors.brownColor56,
-                backgroundImage: NetworkImage(
-                  stepData.avatar!,
-                ),
-              ),
-            );
-          },
-          stepWidget: (_, data) {
-            final stepData = data as StepperItemData;
-            return PreferredSize(
-              preferredSize: const Size.fromWidth(30),
-              child:customTextRegular(title: "25/07/2023",fontSize: 15.w,color: Colors.white,fontWeight: FontWeight.w600)
-              // Text(
-              //   "25/07/2023",
-              //  // stepData.content['born_date'] ?? '',
-              //   style: TextStyle(
-              //     color: theme.primaryColor,
-              //     fontSize: 13,
-              //   ),
-              //   textAlign: TextAlign.center,
-              // ),
-            );
-          },
-          stepContentWidget: (_, data) {
-            final stepData = data as StepperItemData;
-            return Container(
-              margin: const EdgeInsets.only(top: 20,),
-              padding: const EdgeInsets.all(15),
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.white,),
-              //   borderRadius: BorderRadius.circular(10)
-              // ),
-              child: ListTile(
-                contentPadding: const EdgeInsets.all(7),
-                visualDensity: const VisualDensity(
-                  vertical: -4,
-                  horizontal: -4,
-                ),
-              // title: customTextRegular(title: "$formattedDate", color: Colors.white,fontWeight: FontWeight.w500,fontSize: 15),
-                //  Text('$formattedDate',style: TextStyle(color: Colors.white),),
-                //  Text(stepData.content['name'] ?? ''),
-                subtitle: Column(
-                //  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5,),
-                    Wrap(
-                      children: List.generate(5, (index) => Row(
-                        children: [
-                          customTextRegular(title: "49 mins", color: Colors.white,fontWeight: FontWeight.w600,fontSize: 13),
-                          SizedBox(width: 10,),
-                          customTextRegular(title: "10:30 am - 11:19", color: Colors.white.withOpacity(0.70),fontWeight: FontWeight.w600,fontSize: 7),
-                        ],
-                      )),
-                    ),
-                  ],
-                  // children: [
-                  //   const SizedBox(
-                  //     height: 10,
-                  //   ),
-                  //   Row(
-                  //     children: [
-                  //       const Expanded(
-                  //         flex: 3,
-                  //         child: Icon(Icons.work),
-                  //       ),
-                  //       Expanded(
-                  //         flex: 7,
-                  //         child: Text(stepData.content['occupation'] ?? ''),
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   const SizedBox(
-                  //     height: 10,
-                  //   ),
-                  //   Row(
-                  //     children: [
-                  //       const Expanded(
-                  //         flex: 3,
-                  //         child: Icon(Icons.phone),
-                  //       ),
-                  //       Expanded(
-                  //         flex: 7,
-                  //         child: Text(stepData.content['mobileNumber'] ?? ''),
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   const SizedBox(
-                  //     height: 10,
-                  //   ),
-                  //   Row(
-                  //     mainAxisAlignment: MainAxisAlignment.start,
-                  //     children: [
-                  //       // const Expanded(
-                  //       //   flex: 3,
-                  //       //   child: Icon(Icons.email),
-                  //       // ),
-                  //       // Expanded(
-                  //       //   flex: 7,
-                  //       //   child: Text(stepData.content['email'] ?? ''),
-                  //       // ),
-                  //     ],
-                  //   ),
-                  //   const SizedBox(
-                  //     height: 20,
-                  //   ),
-                  //   Text(
-                  //     'Contact Link',
-                  //     style: theme.textTheme.titleMedium,
-                  //   ),
-                  //   const SizedBox(
-                  //     height: 7,
-                  //   ),
-                  //   Padding(
-                  //     padding: const EdgeInsets.only(left: 10),
-                  //     child: Column(
-                  //       mainAxisSize: MainAxisSize.min,
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Row(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             Expanded(
-                  //               flex: 3,
-                  //               child: Text(
-                  //                 'Linked-In',
-                  //                 style: theme.textTheme.caption,
-                  //               ),
-                  //             ),
-                  //             // Expanded(
-                  //             //   flex: 7,
-                  //             //   child: GestureDetector(
-                  //             //     onTap: () {
-                  //             //       //_launchURL(stepData.content['contact_list']['LinkedIn']);
-                  //             //     },
-                  //             //     child: Text(
-                  //             //       stepData.content['contact_list']['LinkedIn'] ?? '',
-                  //             //       style: theme.textTheme.titleMedium?.copyWith(
-                  //             //         color: Colors.blue,
-                  //             //         decoration: TextDecoration.underline,
-                  //             //       ),
-                  //             //     ),
-                  //             //   ),
-                  //             // ),
-                  //           ],
-                  //         ),
-                  //         const SizedBox(
-                  //           height: 10,
-                  //         ),
-                  //         Row(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             Expanded(
-                  //               flex: 3,
-                  //               child: Text(
-                  //                 'Portfolio',
-                  //                 style: theme.textTheme.caption,
-                  //               ),
-                  //             ),
-                  //             // Expanded(
-                  //             //   flex: 7,
-                  //             //   child: GestureDetector(
-                  //             //     onTap: () {
-                  //             //       //_launchURL(stepData.content['contact_list']['Portfolio']);
-                  //             //     },
-                  //             //     child: Text(
-                  //             //       stepData.content['contact_list']['Portfolio'] ?? '',
-                  //             //       style: theme.textTheme.titleMedium?.copyWith(
-                  //             //         color: Colors.blue,
-                  //             //         decoration: TextDecoration.underline,
-                  //             //       ),
-                  //             //     ),
-                  //             //   ),
-                  //             // ),
-                  //           ],
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  //   const SizedBox(
-                  //     height: 20,
-                  //   ),
-                  // ],
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(
-                    color: AppColors.white,
-                    width: 0.8,
-                  ),
-                ),
-              ),
-            );
-          },
-          stepperThemeData: StepperThemeData(
-            lineColor: AppColors.white,
-            lineWidth: 3,
+      body: SingleChildScrollView(
+        child: Container(
+          height: Get.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.blue, AppColors.lightgreen],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
-          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              Container(
+                child: ListView.builder(
+
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 1,
+                    itemBuilder: (context, index) {
+
+                      final date = DateModelData[index];
+
+                      // DateTime targetDate = DateTime(2023, 8, 10);
+                      // // Check if the project's date is the same as the current date
+                      // bool isSameDate = projects[index].date.isAtSameMomentAs( DateTime(2023, 8, 10));
+                      //
+                      //   print('project date is ${projects[index].date}');
+                      //   print('now date  is ${DateTime.now()}');
+                      //
+                      // // Update currentIndex based on the date comparison
+                      // if (!isSameDate) {
+                      //   currentIndex++; // Increase currentIndex if dates are different
+                      //   print('currentIndex is $currentIndex');
+                      // }
+
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('Current Index: ${DateModelData[index].currentIndex ?? "N/A"}'),
+                              // Text(
+                              //   // DateFormat('dd/MM/yyyy').format(DateModelData[index].date),
+                              //   '${_dateModel[index].currentIndex}',
+                              //   style: TextStyle(
+                              //     fontWeight: FontWeight.w500,
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: AppColors.blue,
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.all(7),
+                              visualDensity: const VisualDensity(
+                                vertical: -4,
+                                horizontal: -4,
+                              ),
+                              subtitle: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Wrap(
+                                    children: List.generate(
+                                      projects.length,
+                                      (index) => Row(
+                                        children: [
+                                          customTextRegular(
+                                            title:
+                                                "${projects[index].minutes} mins",
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                          ),
+                                          SizedBox(width: 10),
+                                          customTextRegular(
+                                            title:
+                                                "${DateFormat('hh:mm a').format(projects[index].startTime)} - ${DateFormat('hh:mm a').format(projects[index].endTime)}",
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 7,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                side: BorderSide(
+                                  color: AppColors.white,
+                                  width: 0.8,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
-
-  // Future<void> _launchURL(String? url) async {
-  //   if (url == null) {
-  //     return;
-  //   }
-  //   try {
-  //     if (await canLaunchUrl(Uri.parse(url))) {
-  //       await launchUrl(Uri.parse(url));
-  //     }
-  //     return;
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print('Failed to launch URL - $e');
-  //     }
-  //   }
-  // }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:hive/hive.dart';
+//
+// import '../hidve_database/existing_data.dart';
+// class ProjectDetail extends StatefulWidget {
+//
+//   const ProjectDetail({super.key});
+//
+//   @override
+//   State<ProjectDetail> createState() => _ProjectDetailState();
+// }
+//
+// class _ProjectDetailState extends State<ProjectDetail> {
+//
+//     // DateTime now = DateTime.now();
+//   // String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+//   // print(formattedDateTime);
+//
+//
+//   late Box<DataModel> box; // Declare the box variable
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     box = Hive.box<DataModel>('dataBox');
+//     // openHiveBox(); // Call the method to open the Hive box
+//   }
+//
+//   // Future<void> openHiveBox() async {
+//   //   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+//   //   Hive.init(appDocumentDir.path);
+//   //
+//   //   box = await Hive.openBox<DataModel>('dataBox');
+//   // }
+//
+//   Future<void> openHiveBox() async {
+//     box = await Hive.openBox<DataModel>('dataBox');
+//
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     final List<DataModel> projects = box.values.toList();
+//
+//     return Scaffold(
+//       backgroundColor: Colors.blue,
+//       body: SafeArea(
+//         child: Container(
+//           child: Column(
+//             children: [
+//               SizedBox(height: 200,),
+//               Container(
+//
+//                 child: ListView.builder(
+//                   shrinkWrap: true,
+//                   physics: NeverScrollableScrollPhysics(),
+//                     itemCount: projects.length,
+//                     itemBuilder: (context,index){
+//
+//                       final project = projects[index];
+//
+//
+//                   return Container(
+//                     color: Colors.yellow,
+//                     height: 100,width: double.infinity,
+//                       child: Text(project.seconds.toString(),style: TextStyle(fontSize: 24,color: Colors.black),),
+//                   );
+//                 }),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

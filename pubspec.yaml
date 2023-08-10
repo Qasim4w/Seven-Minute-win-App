@@ -48,6 +48,15 @@ dependencies:
   pinput: ^2.2.31
   stepper_list_view: ^0.0.1
   intl: ^0.17.0
+  animated_text_kit: ^4.2.2
+  google_fonts: ^5.1.0
+  flutter_svg: ^2.0.7
+  animated_login: ^1.7.0
+  flare_flutter: ^3.0.2
+  smooth_page_indicator: ^1.0.0+2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
 #  hive: ^2.2.3
 #  hive_flutter: ^1.1.0
 
@@ -79,6 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/Teddy.flr
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -102,17 +112,27 @@ flutter:
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-    - family: RobotoMono-Regular
-      fonts:
-       - asset: fonts/RobotoMono-Regular.ttf
+#    - family: EnnVisions.otf
+#      fonts:
+#       - asset: fonts/EnnVisions.otf
 
+    - family: EnnVisions
+      fonts:
+        - asset: fonts/EnnVisions.otf
+#        - asset: assets/fonts/EnnVisions-Bold.otf
+          weight: 400
+#        - asset: fonts/EnnVisions.otf
+#          weight: 500
+#        - asset: fonts/EnnVisions.otf
+#          weight: 300
 
-    - family: RobotoMono-Bold
+    - family: ._AeonikTRIAL-Regular.otf
       fonts:
-       - asset: fonts/RobotoMono-Bold.ttf
-    - family: RobotoMono-Italic
+       - asset: fonts/._AeonikTRIAL-Regular.otf
+
+    - family: AvenirLTStd-Roman.otf
       fonts:
-       - asset: fonts/RobotoMono-Italic.ttf
+       - asset: fonts/AvenirLTStd-Roman.otf
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,

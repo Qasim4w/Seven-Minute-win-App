@@ -1,0 +1,4 @@
+#Sat Aug 05 04:16:16 PDT 2023
+base.0=C\:\\Users\\Abid Ali\\StudioProjects\\Seven-Minute-win-App\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

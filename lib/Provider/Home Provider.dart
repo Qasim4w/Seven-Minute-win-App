@@ -19,6 +19,23 @@ class TimerProvider extends ChangeNotifier {
 
   int get secondss => _seconds;
 
+  int _minutes = 0;
+
+  int get minutes => _minutes;
+
+  void updateMinutes(int newMinutes) {
+    _minutes = newMinutes;
+    notifyListeners();
+  }
+
+  // void updateMinutes() {
+  //   int minutes = (timerProvider.seconds ~/ 60); // Calculate minutes based on timerValue
+  //   if (minutes < 0) {
+  //     minutes = 0;
+  //   }
+  //   timerProvider.updateMinutes(minutes);
+  // }
+
   bool getTrophyStatus(int index) {
     return index <= selectedIndex; // Trophy is true for previous and current indices
   }
@@ -27,7 +44,7 @@ class TimerProvider extends ChangeNotifier {
     double currentProgress = seconds / totalSeconds;
     return currentProgress.clamp(0.0, 1.0); // Clamp the value between 0.0 and 1.0
   }
-  void removeAllIndicators() {
+ Future <void> removeAllIndicators()async {
     progressList.clear(); // Remove all elements from the progressList
     startValue = 0; // Reset the startValue
     seconds = 0;
@@ -140,6 +157,7 @@ class TimerProvider extends ChangeNotifier {
   //   }
   //   notifyListeners(); // Notify listeners after updating the isPlaying property
   // }
+
   void togglePlayPause() {
     isPlaying = !isPlaying;
     if (isPlaying) {

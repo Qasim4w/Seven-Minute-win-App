@@ -1,526 +1,639 @@
-// import 'dart:async';
-// import 'package:carousel_slider/carousel_slider.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:percent_indicator/circular_percent_indicator.dart';
-// import 'package:provider/provider.dart';
-// import 'package:seven_min_track/Pracitce/custom%20indicator.dart';
-// import 'package:seven_min_track/Provider/Home%20Provider.dart';
-// import 'package:seven_min_track/Provider/Home%20Provider.dart';
-// import 'package:simple_speed_dial/simple_speed_dial.dart';
-// import '../Provider/Home Provider.dart';
-// import '../Provider/Home Provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:seven_min_track/utils/app_colors.dart';
+import 'package:seven_min_track/view/Home%20Screen/home_screen.dart';
+import 'package:seven_min_track/view/hidve_database/create_project.dart';
+import 'package:seven_min_track/view/hidve_database/existing_data.dart';
+import 'package:simple_speed_dial/simple_speed_dial.dart';
+import '../../Provider/Home Provider.dart';
+import '../Add Details/Add data.dart';
+import '../Break Screen/Break.dart';
+import '../hidve_database/date_model.dart';
 
-// class Home extends StatefulWidget {
-//   @override
-//   State<Home> createState() => _HomeState();
-// }
-//
-// class _HomeState extends State<Home> {
-//
-//   home_provider prov = home_provider();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     var timerValue1 = prov.start1 / 420;
-//     var timerValue2 = prov.start2 / 420;
-//     var timerValue3 = prov.start3 / 420;
-//     var timerValue4 = prov.start4 / 420;
-//     var timerValue5 = prov.start5 / 420;
-//     var timerValue6 = prov.start6 / 420;
-//     var timerValue7 = prov.start7 / 420;
-//
-//     return Scaffold(
-//       backgroundColor: Colors.deepOrange,
-//       appBar: AppBar(
-//         elevation: 0,
-//         backgroundColor: Colors.deepOrange,
-//         title: Center(
-//           child: Text(
-//             '7 mins Track',
-//             style: TextStyle(
-//                 fontSize: 40.sp,
-//                 color: Colors.white,
-//                 fontFamily: 'Tillana-Bold'),
-//           ),
-//         ),
-//       ),
-//       body: Column(
-//         // mainAxisAlignment: MainAxisAlignment.center,
-//         // crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           ///
-//           Consumer<home_provider>(builder: (context, home_provider, child) {
-//             return CircularPercentIndicator(
-//               radius: 150,
-//               backgroundColor: Colors.white,
-//               progressColor: Colors.green,
-//               lineWidth: 20.0,
-//               percent:
-//               home_provider.selectedIndex == 1
-//                   ? timerValue1
-//                   : home_provider.selectedIndex == 2
-//                       ? timerValue2
-//                       : home_provider.selectedIndex == 3
-//                           ? timerValue3
-//                           : home_provider.selectedIndex == 4
-//                               ? timerValue4
-//                               : home_provider.selectedIndex == 5
-//                                   ? timerValue5
-//                                   : home_provider.selectedIndex == 6
-//                                       ? timerValue6
-//                                       : home_provider.selectedIndex == 7
-//                                           ? timerValue7
-//                                           : timerValue7,
-//               center: Text(
-//                 home_provider.selectedIndex == 1
-//                     ? home_provider.minute1.toString()
-//                     : home_provider.selectedIndex == 2
-//                         ? home_provider.minute2.toString()
-//                         : home_provider.selectedIndex == 3
-//                             ? home_provider.minute3.toString()
-//                             : home_provider.selectedIndex == 4
-//                                 ? home_provider.minute4.toString()
-//                                 : home_provider.selectedIndex == 5
-//                                     ? home_provider.minute5.toString()
-//                                     : home_provider.selectedIndex == 6
-//                                         ? home_provider.minute6.toString()
-//                                         : home_provider.selectedIndex == 7
-//                                             ? home_provider.minute7.toString()
-//                                             : home_provider.minute7.toString(),
-//                 style: TextStyle(
-//                   color: Colors.white,
-//                   fontFamily: 'Tillana-Regular',
-//                   fontSize: 90.0.sp,
-//                 ),
-//               ),
-//             );
-//           }),
-//
-//           Consumer<home_provider>(builder: (context, home_provider, child) {
-//             return Padding(
-//               padding: EdgeInsets.only(right: 15.w),
-//               child: Align(
-//                 alignment: Alignment.centerRight,
-//                 child: Container(
-//                   height: 100,
-//                   width: 100,
-//                   decoration: BoxDecoration(
-//                     color: Colors.white,
-//                     border: Border.all(width: 5.w, color: Colors.deepOrange),
-//                     borderRadius: BorderRadius.circular(100.r),
-//                   ),
-//                   child: Center(
-//                     child: Text(
-//                       home_provider.selectedIndex == 1
-//                           ? home_provider.start1.toString()
-//                           : home_provider.selectedIndex == 2
-//                               ? home_provider.start2.toString()
-//                               : home_provider.selectedIndex == 3
-//                                   ? home_provider.start3.toString()
-//                                   : home_provider.selectedIndex == 4
-//                                       ? home_provider.start4.toString()
-//                                       : home_provider.selectedIndex == 5
-//                                           ? home_provider.start5.toString()
-//                                           : home_provider.selectedIndex == 6
-//                                               ? home_provider.start6.toString()
-//                                               : home_provider.selectedIndex == 7
-//                                                   ? home_provider.start7
-//                                                       .toString()
-//                                                   : home_provider.progress
-//                                                       .toString(),
-//                       style: TextStyle(
-//                         color: Colors.deepOrange,
-//                         fontFamily: 'Tillana-Bold',
-//                         fontSize: 40.0.sp,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             );
-//           }),
-//
-//           ///
-//           Consumer<home_provider>(builder: (context, home_provider, child) {
-//             return SizedBox(
-//               height: 220.h,
-//               width: double.infinity,
-//               child: ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: home_provider.progressList.length,
-//                 itemBuilder: (context, index) {
-//                   int progress = home_provider.progressList[index];
-//                   return home_provider.selectedIndex == 1 ? index == 0 ? SizedBox(width: 50.w) : custom_indicator(
-//                     percent: index == 0
-//                       ? timerValue1
-//                       : index == 1
-//                       ? timerValue2
-//                       : index == 2
-//                       ? timerValue3
-//                       : index == 3
-//                       ? timerValue4
-//                       : index == 4
-//                       ? timerValue5
-//                       : index == 5
-//                       ? timerValue6
-//                       : timerValue7,
-//                     data: index == 0
-//                         ? home_provider.minute1.toString()
-//                         : index == 1
-//                         ? home_provider. minute2.toString()
-//                         : index == 2
-//                         ? home_provider.minute3.toString()
-//                         : index == 3
-//                         ? home_provider.minute4.toString()
-//                         : index == 4
-//                         ? home_provider.minute5.toString()
-//                         : index == 5
-//                         ? home_provider.minute6.toString()
-//                         : home_provider.minute7.toString(),):
-//
-//                   home_provider.selectedIndex == 2 ? index == 1 ? SizedBox(width: 45.w,) : custom_indicator(
-//                     percent: index == 0
-//                         ? timerValue1
-//                         : index == 1
-//                         ? timerValue2
-//                         : index == 2
-//                         ? timerValue3
-//                         : index == 3
-//                         ? timerValue4
-//                         : index == 4
-//                         ? timerValue5
-//                         : index == 5
-//                         ? timerValue6
-//                         : timerValue7,
-//                     data: index == 0
-//                         ? home_provider.minute1.toString()
-//                         : index == 1
-//                         ? home_provider.minute2.toString()
-//                         : index == 2
-//                         ? home_provider.minute3.toString()
-//                         : index == 3
-//                         ? home_provider.minute4.toString()
-//                         : index == 4
-//                         ? home_provider.minute5.toString()
-//                         : index == 5
-//                         ? home_provider.minute6.toString()
-//                         : home_provider.minute7.toString(),):
-//
-//                   home_provider.selectedIndex == 3 ? index == 2 ? SizedBox(width: 45.w,) : custom_indicator(
-//                     percent: index == 0
-//                         ? timerValue1
-//                         : index == 1
-//                         ? timerValue2
-//                         : index == 2
-//                         ? timerValue3
-//                         : index == 3
-//                         ? timerValue4
-//                         : index == 4
-//                         ? timerValue5
-//                         : index == 5
-//                         ? timerValue6
-//                         : timerValue7,
-//                     data: index == 0
-//                         ? home_provider.minute1.toString()
-//                         : index == 1
-//                         ? home_provider.minute2.toString()
-//                         : index == 2
-//                         ? home_provider.minute3.toString()
-//                         : index == 3
-//                         ? home_provider.minute4.toString()
-//                         : index == 4
-//                         ? home_provider.minute5.toString()
-//                         : index == 5
-//                         ? home_provider.minute6.toString()
-//                         : home_provider.minute7.toString(),):
-//
-//                   // home_provider.selectedIndex == 4 ? index == 3 ? SizedBox(width: 45.w,) : custom_indicator(
-//                   //   percent: index == 0
-//                   //       ? timerValue
-//                   //       : index == 1
-//                   //       ? timerValue1
-//                   //       : index == 2
-//                   //       ? timerValue2
-//                   //       : index == 3
-//                   //       ? timerValue3
-//                   //       : index == 4
-//                   //       ? timerValue4
-//                   //       : index == 5
-//                   //       ? timerValue5
-//                   //       : timerValue6,
-//                   //   data: index == 0
-//                   //       ? minute1.toString()
-//                   //       : index == 1
-//                   //       ? minute2.toString()
-//                   //       : index == 2
-//                   //       ? minute3.toString()
-//                   //       : index == 3
-//                   //       ? minute4.toString()
-//                   //       : index == 4
-//                   //       ? minute5.toString()
-//                   //       : index == 5
-//                   //       ? minute6.toString()
-//                   //       : _start6.toString(),):
-//                   //
-//                   // selectedIndex == 5 ? index == 4 ? SizedBox(width: 45.w,) : custom_indicator(
-//                   //   percent: index == 0
-//                   //       ? timerValue
-//                   //       : index == 1
-//                   //       ? timerValue1
-//                   //       : index == 2
-//                   //       ? timerValue2
-//                   //       : index == 3
-//                   //       ? timerValue3
-//                   //       : index == 4
-//                   //       ? timerValue4
-//                   //       : index == 5
-//                   //       ? timerValue5
-//                   //       : timerValue6,
-//                   //   data: index == 0
-//                   //       ? minute1.toString()
-//                   //       : index == 1
-//                   //       ? minute2.toString()
-//                   //       : index == 2
-//                   //       ? minute3.toString()
-//                   //       : index == 3
-//                   //       ? minute4.toString()
-//                   //       : index == 4
-//                   //       ? minute5.toString()
-//                   //       : index == 5
-//                   //       ? minute6.toString()
-//                   //       : _start6.toString(),):
-//                   //
-//                   // selectedIndex == 6 ? index == 5 ? SizedBox(width: 45.w,) : custom_indicator(
-//                   //   percent: index == 0
-//                   //       ? timerValue
-//                   //       : index == 1
-//                   //       ? timerValue1
-//                   //       : index == 2
-//                   //       ? timerValue2
-//                   //       : index == 3
-//                   //       ? timerValue3
-//                   //       : index == 4
-//                   //       ? timerValue4
-//                   //       : index == 5
-//                   //       ? timerValue5
-//                   //       : index == 6
-//                   //       ? timerValue6
-//                   //       : timerValue6,
-//                   //   data: index == 0
-//                   //       ? minute1.toString()
-//                   //       : index == 1
-//                   //       ? minute2.toString()
-//                   //       : index == 2
-//                   //       ? minute3.toString()
-//                   //       : index == 3
-//                   //       ? minute4.toString()
-//                   //       : index == 4
-//                   //       ? minute5.toString()
-//                   //       : index == 5
-//                   //       ? minute6.toString()
-//                   //       : minute7.toString(),):
-//
-//                   // selectedIndex == 7 ? index == 6 ? SizedBox(width: 45.w,) : custom_indicator(
-//                   //   percent: index == 0
-//                   //       ? timerValue
-//                   //       : index == 1
-//                   //       ? timerValue1
-//                   //       : index == 2
-//                   //       ? timerValue2
-//                   //       : index == 3
-//                   //       ? timerValue3
-//                   //       : index == 4
-//                   //       ? timerValue4
-//                   //       : index == 5
-//                   //       ? timerValue5
-//                   //       : index == 6
-//                   //       ? timerValue6
-//                   //   : timerValue6,
-//                   //   data: index == 0
-//                   //       ? minute1.toString()
-//                   //       : index == 1
-//                   //       ? minute2.toString()
-//                   //       : index == 2
-//                   //       ? minute3.toString()
-//                   //       : index == 3
-//                   //       ? minute4.toString()
-//                   //       : index == 4
-//                   //       ? minute5.toString()
-//                   //       : index == 5
-//                   //       ? minute6.toString()
-//                   //       : minute7.toString(),):
-//
-//                   custom_indicator(
-//                     percent: index == 0
-//                         ? timerValue1
-//                         : index == 1
-//                         ? timerValue2
-//                         : index == 2
-//                         ? timerValue3
-//                         : index == 3
-//                         ? timerValue4
-//                         : index == 4
-//                         ? timerValue5
-//                         : index == 5
-//                         ? timerValue5
-//                         : timerValue7,
-//                     data: index == 0
-//                         ? home_provider.minute1.toString()
-//                         : index == 1
-//                         ? home_provider.minute2.toString()
-//                         : index == 2
-//                         ? home_provider.minute3.toString()
-//                         : index == 3
-//                         ? home_provider.minute4.toString()
-//                         : index == 4
-//                         ? home_provider.minute5.toString()
-//                         : index == 5
-//                         ? home_provider.minute6.toString()
-//                         : home_provider.minute7.toString(),);
-//                 },
-//               ),
-//             );
-//           }),
-//
-//           Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 100.w),
-//             child: Consumer<home_provider>(
-//               builder: (context, home_provider, child) {
-//                 return Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   children: [
-//                     GestureDetector(
-//                       onTap: () {
-//                         home_provider.addTrack(0);
-//                       },
-//                       child: Container(
-//                         height: 35.h,
-//                         width: 35.w,
-//                         decoration: BoxDecoration(
-//                             color: Colors.white,
-//                             borderRadius: BorderRadius.circular(50.r)),
-//                         child: const Icon(
-//                           Icons.add,
-//                           color: Colors.black,
-//                         ),
-//                       ),
-//                     ),
-//                     GestureDetector(
-//                       onTap: () {
-//                         home_provider.togglePlayPause();
-//                         // if (progressList.isNotEmpty) {
-//                         //   home_provider.togglePlayPause();
-//                         //   setState(() {
-//                         //     _timer!.isActive ? stop() : startTimer();
-//                         //   });
-//                         // }
-//                       },
-//                       child: Container(
-//                         height: 35.h,
-//                         width: 35.w,
-//                         decoration: BoxDecoration(
-//                             color: Colors.white,
-//                             borderRadius: BorderRadius.circular(50.r)),
-//                         child: home_provider.isPlaying
-//                             ? Icon(
-//                                 Icons.pause,
-//                                 color: Colors.deepOrange,
-//                               )
-//                             : Icon(Icons.play_arrow, color: Colors.deepOrange),
-//                       ),
-//                     ),
-//                     GestureDetector(
-//                       onTap: () {
-//                         home_provider.removeTrack(0);
-//                       },
-//                       child: Container(
-//                         height: 35.h,
-//                         width: 35.w,
-//                         decoration: BoxDecoration(
-//                             color: Colors.white,
-//                             borderRadius: BorderRadius.circular(50.r)),
-//                         child: const Icon(
-//                           Icons.remove,
-//                           color: Colors.black,
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//
-//       /// floating action speed dial button
-//       floatingActionButton:
-//           Consumer<home_provider>(builder: (context, home_provider, child) {
-//         return SpeedDial(
-//           speedDialChildren: <SpeedDialChild>[
-//             SpeedDialChild(
-//               closeSpeedDialOnPressed: false,
-//               child: const Icon(
-//                 Icons.remove,
-//                 color: Colors.black,
-//               ),
-//               foregroundColor: Colors.black,
-//               backgroundColor: Colors.white,
-//               label: 'Remove Track',
-//               onPressed: () {
-//                 home_provider.removeTrack(0);
-//               },
-//             ),
-//             SpeedDialChild(
-//               closeSpeedDialOnPressed: false,
-//               child: const Icon(
-//                 Icons.add,
-//                 color: Colors.black,
-//               ),
-//               foregroundColor: Colors.red,
-//               backgroundColor: Colors.white,
-//               label: 'Add Track',
-//               onPressed: () {
-//                 home_provider.addTrack(0);
-//               },
-//             ),
-//             SpeedDialChild(
-//               closeSpeedDialOnPressed: false,
-//               child: home_provider.isPlaying
-//                   ? Icon(Icons.pause)
-//                   : Icon(Icons.play_arrow),
-//               foregroundColor: Colors.red,
-//               backgroundColor: Colors.white,
-//               label: home_provider.isPlaying ? 'Pause' : 'Play',
-//               onPressed: () {
-//                 home_provider.togglePlayPause();
-//                 // if (progressList.isNotEmpty) {
-//                 //
-//                 //   setState(() {
-//                 //     _timer!.isActive ? stop() : startTimer();
-//                 //   });
-//                 // }
-//               },
-//             ),
-//           ],
-//           labelsStyle: TextStyle(
-//               color: Colors.white, fontFamily: 'Tillana-Bold', fontSize: 15.sp),
-//           labelsBackgroundColor: Colors.deepOrange,
-//           closedForegroundColor: Colors.white,
-//           openForegroundColor: Colors.black,
-//           closedBackgroundColor: Colors.deepOrange,
-//           openBackgroundColor: Colors.white,
-//           child: Text(
-//             'Add',
-//             style: TextStyle(fontFamily: 'Tillana-Bold', fontSize: 20.sp),
-//           ),
-//         );
-//       }),
-//     );
-//   }
-//
-//   int _progress = 0;
-// }
+class DummyLetsGo extends StatefulWidget {
+
+  DummyLetsGo( {Key? key})
+      : super(key: key);
+
+  @override
+  State<DummyLetsGo> createState() => _DummyLetsGoState();
+}
+
+class _DummyLetsGoState extends State<DummyLetsGo> {
+//  const LetsGoScreen({super.key});
+
+  String projectBoxName = 'projects';
+  String projectBoxNames = 'dateBox';
+
+  late Box<Project> box; // Declare the box variable
+  late Box<DateModel> boxx; // Declare the box variable
+
+  Future<void> openHiveBox() async {
+    box = await Hive.openBox<Project>('projects');
+    boxx = await Hive.openBox<DateModel>('dateBox');
+  }
+
+  TimerProvider timer = TimerProvider();
+
+  void initState() {
+    super.initState();
+    print('removed');
+
+    box = Hive.box<Project>(projectBoxName); // Initialize the box variable
+    boxx = Hive.box<DateModel>('dateBox'); // Initialize the box variable
+    openHiveBox();
+  }
+
+
+  Future<void> saveDate() async {
+    final box = await Hive.openBox<DateModel>('dateBox'); // Open the Hive box
+
+    DateModel lastData;
+
+    if (box.isNotEmpty) {
+      lastData = box.getAt(box.length - 1)!; // Use the non-nullable assertion operator (!)
+    } else {
+      lastData = DateModel(DateTime.now(), 0);
+    }
+
+    DateTime currentDate = DateTime.now();
+    int updatedIndex = lastData.currentIndex;
+
+    if (lastData.date.year != currentDate.year ||
+        lastData.date.month != currentDate.month ||
+        lastData.date.day != currentDate.day) {
+      updatedIndex++; // Increment index for different dates
+    }
+
+    final newData = DateModel(currentDate, updatedIndex);
+    box.add(newData);
+
+    print('Data successfully added:');
+    print('Date: ${newData.date}');
+    print('Updated Index: ${newData.currentIndex}');
+  }
+
+
+
+  Future<void> saveExistingData(int seconds, int minutes) async {
+    DateTime currentTime = DateTime.now(); // Get the current time
+
+    final dataa = DataModel(
+      minutes: minutes,
+      seconds: seconds,
+      date: DateTime.now(),
+      // Use the current date
+      startTime: currentTime,
+      endTime: currentTime,
+    );
+
+    final box = await Hive.openBox<DataModel>('dataBox'); // Open the Hive box
+
+    box.add(dataa); // Add the data to the box
+    print('Saved');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('build ');
+    TimerProvider timerProvider =
+    Provider.of<TimerProvider>(context, listen: false);
+
+    ///build method is calling every second and showing issue of setState() or markNeedsBuild() called during build.
+    /// because of TimerProvider timerProvider = Provider.of<TimerProvider>(context,listen: true); make listen false ok.
+
+    // print('Removed Indicators are ${  timerProvider.removeAllIndicators}');
+    // timerProvider.resetTrophy();
+    // timerProvider.removeAllIndicators();
+
+    return Scaffold(
+      // backgroundColor: Color(0xffFCD51A),
+      body: SingleChildScrollView(
+
+        child: Container(
+          height: Get.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.blue, AppColors.lightgreen],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(children: [
+                SizedBox(
+                  height: 50.h,
+                ),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     GestureDetector(
+                //       // onTap: () async {
+                //       //   if (widget.type == false) {
+                //       //     saveDate();
+                //       //     saveExistingData(timerProvider.minutes, timerProvider.seconds).then((data) {
+                //       //       timerProvider.removeAllIndicators();
+                //       //       timerProvider.isLock = true;
+                //       //       timerProvider.selectedIndex == 0;
+                //       //       timerProvider.resetTrophy();
+                //       //
+                //       //       print('jabbar ${timerProvider.seconds}');
+                //       //     }).catchError((error) {
+                //       //       print('Error fetching data: $error');
+                //       //     });
+                //       //   } else {
+                //       //     saveData(timerProvider.seconds, timerProvider.minutes)
+                //       //         .then((data) {
+                //       //       print("${timerProvider.minutes}");
+                //       //       // print('Data fetched: $data');
+                //       //       //  process(data);
+                //       //       timerProvider.removeAllIndicators();
+                //       //       timerProvider.isLock = true;
+                //       //       timerProvider.selectedIndex == 0;
+                //       //       timerProvider.resetTrophy();
+                //       //     }).catchError((error) {
+                //       //       print('Error fetching data: $error');
+                //       //     });
+                //       //   }
+                //       //
+                //       //   saveDate();
+                //       //   Get.to(() => HomeScreen());
+                //       //   print('seconds is ${timerProvider.seconds}');
+                //       // },
+                //       child: SvgPicture.asset(
+                //         "assets/icons/download-square_svgrepo.com.svg",
+                //       ),
+                //       // Text("Save",style: GoogleFonts.avan(textStyle:TextStyle(fontSize: 25,fontWeight: FontWeight.w700,color: Colors.white, ),)
+                //       //Text('Save',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w700,color: Colors.white,fontFamily: 'Tillana-Bold'),)),
+                //       //   Text("Save",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400,color: Colors.white,fontFamily: 'AvenirLTStd-Roman' ))
+                //     ),
+                //   ],
+                // ),
+
+                //  Text(timerProvider.seconds.toString(),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,color: Colors.white,fontFamily: 'AvenirLTStd-Roman' ),),
+
+                SizedBox(
+                  height: 70.h,
+                ),
+
+                Consumer<TimerProvider>(builder: (context, _, timer) {
+                  return Container(
+                    // color: Colors.red,
+                    height: 340.h,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        TimerTracksModel data = TimerTracksModel(
+                            start: timerProvider.startValue,
+                            minute: 0); // Set timer for 7 minutes
+
+                        int totalSeconds = data.minute * 60 + data.start;
+
+                        double currentProgress =
+                        timerProvider.getCurrentProgress(totalSeconds);
+
+                        if (!timerProvider.isPlaying ||
+                            timerProvider.seconds >= totalSeconds) {
+                          // Timer has completed or not playing, perform any required actions here
+                          timerProvider.pauseTimer();
+                          //  timerProvider.setSeconds(0); // Reset the timerValue
+                          timerProvider.isPlaying = false; // Stop playing
+                        }
+
+                        int minutes = (timerProvider.seconds ~/
+                            60); // Calculate minutes based on timerValue
+                        if (minutes < 0) {
+                          minutes = 0;
+                        }
+                        timerProvider.updateMinutes(minutes);
+
+                        return CircularPercentIndicator(
+                          circularStrokeCap: CircularStrokeCap.round,
+                          arcBackgroundColor: Colors.white.withOpacity(.20),
+                          arcType: ArcType.FULL,
+                          radius: 140,
+                          animation: false,
+                          progressColor: Colors.white,
+                          lineWidth: 8.0,
+                          percent: currentProgress,
+                          center: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Consumer<TimerProvider>(
+                                builder: (context, _, TimerProvider) {
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        minutes.toString(),
+                                        style: TextStyle(
+                                            fontSize: 120,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                            fontFamily: 'AvenirLTStd-Roman'),
+                                      ),
+                                      SizedBox(height: 44),
+                                      Hero(
+                                        tag: 'lets_start_button',
+                                        child: Container(
+                                          height: 40,
+                                          width: 145,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            // gradient: LinearGradient(
+                                            //   colors: [Color(0xff7ef29d ), Color(0xffFBC40F)],
+                                            //   begin: Alignment.topLeft,
+                                            //   end: Alignment.bottomRight,
+                                            // ),
+
+                                            border: Border.all(
+                                                width: 5, color: AppColors.white),
+                                            borderRadius:
+                                            BorderRadius.circular(100),
+                                          ),
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  '${timerProvider.seconds}s / ${totalSeconds}s',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.black,
+                                                    fontFamily: 'AvenirLTStd-Roman',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }),
+
+                /// The null check Operator is here
+                /// i think because the trophy and percent
+                /// are not given
+
+                SizedBox(
+                  height: 76.h,
+                ),
+                Consumer<TimerProvider>(builder: (context, _, timer) {
+                  return SizedBox(
+                    height: 100.h,
+                    width: double.infinity,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: List.generate(
+                        timerProvider.progressList.length > 0
+                            ? timerProvider.progressList.length
+                            : 1, // Check if progressList is empty
+                            (index) {
+                          int progressTotalSeconds =
+                          60; // Set the total seconds to 60 for each indicator
+
+                          timerProvider.updateProgress(
+                              index, progressTotalSeconds);
+
+                          double progressCurrentProgress =
+                          0.0; // Default progress for previous indices
+                          bool trophy = index <=
+                              timerProvider
+                                  .selectedIndex; // Trophy is true for previous and current indices
+
+                          if (index <= timerProvider.selectedIndex) {
+                            // Calculate the elapsed time for the current index
+                            int elapsedTime = timerProvider.seconds -
+                                (progressTotalSeconds * index);
+
+                            // Calculate the progress for the current index
+                            progressCurrentProgress =
+                                elapsedTime / progressTotalSeconds;
+                            progressCurrentProgress =
+                                progressCurrentProgress.clamp(0.0,
+                                    1.0); // Clamp the value between 0.0 and 1.0
+                          }
+
+                          return SmallIndicator(
+                            //color: trophy ? Colors.amber : Colors.white,
+                            percent: progressCurrentProgress,
+                            trophy: trophy,
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                }),
+
+                /// Add button
+                /// Add button
+                SizedBox(
+                  height: 70.h,
+                ),
+                Container(
+                  //   color: Colors.red,
+                  width: 290,
+                  child: Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      timerProvider.isLock
+                          ? GestureDetector(
+                        onTap: () {
+                          timerProvider.removeIndicator();
+                        },
+                        child: Container(
+                          height: 38,
+                          width: 38,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            // gradient: LinearGradient(
+                            //   colors: [Color(0xffED631C), Color(0xffED631C).withOpacity(0.40)],
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            //
+                            // ),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.remove,
+                            color: Colors.black,
+                          ),
+                        ),
+                      )
+                          : SizedBox(
+                        width: 40,
+                      ),
+
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Consumer<TimerProvider>(
+                        builder: (context, timerProvider, _) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            height: 40,
+                            width: 127,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              // gradient: LinearGradient(
+                              //   colors: [Color(0xffED631C), Color(0xffED631C).withOpacity(0.40)],
+                              //   begin: Alignment.topLeft,
+                              //   end: Alignment.bottomRight,
+                              // ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                // timerProvider.togglePlayPause();
+                                // timerProvider.isLock = false;
+                                // print('${timerProvider.isPlaying}');
+                                Get.to(()=> CreateProjectScreen());
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Icon(
+                                  //   timerProvider.isPlaying
+                                  //       ? Icons.pause
+                                  //       : Icons.play_arrow,
+                                  //   color: Colors.black,
+                                  // ),
+                                  Text(
+                                    "Select Project",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontFamily: 'RobotoMono-Bold',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+
+                      /// +
+                      SizedBox(
+                        width: 20,
+                      ),
+                      timerProvider.isLock
+                          ? GestureDetector(
+                        onTap: () {
+                          timerProvider.addIndicator();
+                        },
+                        child: Container(
+                          height: 38,
+                          width: 38,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            // gradient: LinearGradient(
+                            //   colors: [Color(0xffED631C), Color(0xffED631C).withOpacity(0.40)],
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            // ),
+
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
+                        ),
+                      )
+                          : SizedBox(
+                        width: 38,
+                      ),
+                      //  SizedBox(width: 20,),
+                    ],
+                  ),
+                ),
+
+                SizedBox(
+                  height: 30.h,
+                ),
+
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => BreakScreen());
+
+                        timerProvider.isPlaying = !timerProvider.isPlaying;
+                        if (timerProvider.isPlaying) {
+                          if (timerProvider.timer == null ||
+                              !timerProvider.timer!.isActive) {
+                            timerProvider.startTimer();
+                          }
+                        } else {
+                          timerProvider.pauseTimer();
+                        }
+                      },
+                      child: Hero(
+                        tag: 'break',
+                        child: Container(
+                            height: 38,
+                            width: 38,
+                            decoration: BoxDecoration(
+                                color: Colors.white, shape: BoxShape.circle),
+                            child: Align(
+                                child: SvgPicture.asset(
+                                  "assets/icons/breakcup.svg",
+                                  color: Colors.black,
+                                  height: 20.h,
+                                  width: 20.w,
+                                ))),
+                      ),
+                    ),
+                  ],
+                ),
+              ])),
+        ),
+      ),
+      floatingActionButton: SpeedDial(
+
+        speedDialChildren: <SpeedDialChild>[
+          SpeedDialChild(
+
+            closeSpeedDialOnPressed: true,
+            child: Icon(
+              Icons.add,
+              color: AppColors.primaryColor,
+            ),
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+
+            label: 'New Projects',
+
+            onPressed: () {
+              // Get.to(LetsGoScreen());
+              Get.to(()=> CreateProjectScreen());
+            },
+          ),
+          SpeedDialChild(
+            closeSpeedDialOnPressed: true,
+            child: const Icon(
+              Icons.contact_phone_rounded,
+              color:AppColors.primaryColor,
+            ),
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.white,
+            label: 'Contacts',
+            onPressed: () {
+              // setState(() {
+              //   Get.to(breakScreen());
+              // });
+            },
+          ),
+          SpeedDialChild(
+
+            closeSpeedDialOnPressed: false,
+            child: Icon(
+              Icons.person_outline,
+              color: AppColors.primaryColor,
+            ),
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.white,
+            label: 'Profile',
+            onPressed: () {
+              //  Get.to(project_details());
+            },
+          ),
+        ],
+        labelsStyle: TextStyle(
+          color: Colors.black,
+          fontFamily: 'Tillana-Bold', fontSize: 15.sp,),
+
+        labelsBackgroundColor: AppColors.white,
+        closedForegroundColor: AppColors.blackColor,
+        openForegroundColor: AppColors.blackColor,
+        closedBackgroundColor: Colors.white,
+        openBackgroundColor: Colors.white,
+        child: Icon(
+          Icons.more_vert,
+          size: 40,
+          color: AppColors.blue,
+        ),
+      ),
+    );
+  }
+
+  Future<void> saveData(int seconds, int minutes) async {
+    final data = Project(
+      // title: widget.title,
+      minutes: minutes,
+      // description: widget.description,
+      totalSeconds: seconds,
+    );
+    box.add(data);
+    data.save();
+    print('Saved');
+  }
+}
+
+class SmallIndicator extends StatelessWidget {
+  final double percent;
+  final bool trophy;
+
+  SmallIndicator({Key? key, required this.percent, required this.trophy});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = trophy ? Color(0xff129B12) : Colors.white;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      child: CircularPercentIndicator(
+        radius: 22.0,
+        backgroundColor: color,
+        progressColor: Colors.white,
+        lineWidth: 3.0,
+        percent: percent,
+        center: trophy
+            ? Image.asset("assets/icons/Tree.png",height: 27.h,width: 27.w,color: color,)
+        // Icon(
+        //   Icons.wine_bar_sharp,
+        //   color: Colors.white,
+        // )
+            : SizedBox(), // Hide the center if data is null
+      ),
+    );
+  }
+}
+
+/// Model
+class TimerTracksModel {
+  int start;
+  int minute;
+  bool trophy;
+
+  TimerTracksModel(
+      {required this.start, required this.minute, this.trophy = false});
+}

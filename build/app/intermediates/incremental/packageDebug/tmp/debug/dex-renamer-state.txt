@@ -1,4 +1,4 @@
-#Sun Jul 09 20:26:51 PDT 2023
+#Wed Aug 09 20:34:04 PDT 2023
 base.0=C\:\\Users\\Abid Ali\\StudioProjects\\Seven-Minute-win-App\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

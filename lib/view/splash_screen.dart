@@ -12,7 +12,7 @@ class _SplashLogoState extends State<SplashLogo> {
 
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Get.to(() => CreateTask());
+      Get.to(() => CreateProjectScreen());
     });
     super.initState();
   }
