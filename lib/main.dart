@@ -1,37 +1,17 @@
 import 'dart:async';
-
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:seven_min_track/Provider/Home%20Provider.dart';
 import 'package:seven_min_track/Provider/signup_provider.dart';
-import 'package:seven_min_track/utils/app_colors.dart';
-import 'package:seven_min_track/view/Home%20Screen/Home.dart';
-import 'package:seven_min_track/view/Home%20Screen/home_screen.dart';
-import 'package:seven_min_track/view/auth/forgot_passward.dart';
-import 'package:seven_min_track/view/auth/reset_passward_screen.dart';
-import 'package:seven_min_track/view/auth/login_screen.dart';
-import 'package:seven_min_track/view/auth/sign_up.dart';
+import 'package:seven_min_track/view/auth/new-login/input_helper.dart';
 import 'package:seven_min_track/view/auth/splash_screen.dart';
 import 'package:seven_min_track/view/hidve_database/create_project.dart';
 import 'package:seven_min_track/view/hidve_database/date_model.dart';
 import 'package:seven_min_track/view/hidve_database/existing_data.dart';
-import 'package:seven_min_track/view/lets_go.dart';
-import 'package:seven_min_track/view/lets_start/lets_start.dart';
-import 'package:seven_min_track/view/lets_start/onboarding_screen.dart';
-import 'package:seven_min_track/view/new-login/input_helper.dart';
-import 'package:seven_min_track/view/new-login/signin_button.dart';
-import 'package:seven_min_track/view/new-login/teddy_controller.dart';
-import 'package:seven_min_track/widgets/custom_text_widgets.dart';
-
-import 'Models/TimerModel.dart';
-import 'view/new-login/tracking_input.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +25,10 @@ void main() async {
 
   Hive.registerAdapter(DateModelAdapter());
   await Hive.openBox<DateModel>('dateBox');
+
+  // final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  // Hive.init(appDocumentDir.path);
+  await Hive.openBox<String>('nameBox');
 
 
   // WidgetsFlutterBinding.ensureInitialized();
@@ -83,6 +67,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 typedef void CaretMoved(Offset globalCaretPosition);
 typedef void TextChanged(String text);

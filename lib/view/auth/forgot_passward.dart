@@ -5,9 +5,9 @@ import 'package:seven_min_track/utils/app_colors.dart';
 import 'package:seven_min_track/view/Home%20Screen/home_screen.dart';
 import 'package:seven_min_track/view/auth/otp_screen.dart';
 import 'package:seven_min_track/view/auth/reset_passward_screen.dart';
+import '../../main.dart';
 import '../../widgets/custom_text_widgets.dart';
-import '../new-login/signin_button.dart';
-import '../new-login/tracking_input.dart';
+
 class ForgotPassward extends StatelessWidget {
   //const ForgotPasswardScreen.ForgotPassward({super.key});
 

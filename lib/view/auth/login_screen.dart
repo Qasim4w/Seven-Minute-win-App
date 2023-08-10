@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:seven_min_track/view/auth/sign_up.dart';
-
 import '../../main.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/custom_text_widgets.dart';
-import '../new-login/teddy_controller.dart';
-
 import 'forgot_passward.dart';
+import 'new-login/teddy_controller.dart';
 
 
 class SignInScreen extends StatefulWidget {

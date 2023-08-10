@@ -4,10 +4,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import '../../utils/app_colors.dart';
+import '../Home Screen/lets_start/lets_go.dart';
 import '../hidve_database/create_project.dart';
-import '../hidve_database/data_retrieve.dart';
-import '../lets_go.dart';
-import '../lets_start/lets_start.dart';
+
 
 class CreateProjectScreen extends StatefulWidget {
   const CreateProjectScreen({Key? key}) : super(key: key);

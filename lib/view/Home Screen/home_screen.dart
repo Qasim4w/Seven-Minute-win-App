@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:seven_min_track/utils/app_constant.dart';
-import 'package:seven_min_track/view/Home%20Screen/project_detail.dart';
-import 'package:seven_min_track/view/lets_go.dart';
-import 'package:simple_speed_dial/simple_speed_dial.dart';
+import 'package:seven_min_track/view/Home%20Screen/lets_start/lets_go.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/custom_text_widgets.dart';
 import '../Add Details/Add data.dart';
 import '../hidve_database/create_project.dart';
-import '../hidve_database/data_retrieve.dart';
 import '../hidve_database/date_model.dart';
 import 'let_see.dart';
 
@@ -101,47 +97,50 @@ class _HomeScreenState extends State<HomeScreen>with TickerProviderStateMixin {
 
 
 
-                      AnimatedBuilder(
-                      animation: _animation,
-                       builder: (context, child) {
-                        return Center(
+                      Row(
+                        children: [
+                          Text('Hello,',style: TextStyle(fontWeight: FontWeight.w700,color: Colors.white,fontSize: 24.h),),
+                          AnimatedBuilder(
+                            animation: _animation,
+                            builder: (context, child) {
+                              final nameBox = Hive.box<String>('nameBox'); // Access the Hive box
+                              final retrievedName = nameBox.get('nameKey') ??  "Hello, Nouman"; // Use a default value if the retrieved name is null
 
-                         child: Opacity(
-                        opacity: _animation.value,
-                          child: customTextRegular(
-                         title: "Hello, Nouman",
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24.w,
-                        color: AppColors.white,
+                              return Center(
+                                child: Opacity(
+                                  opacity: _animation.value,
+                                  child: customTextRegular(
+                                    title: retrievedName,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 24.h,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    ),
-                  );
-                },
-              ),
                       SizedBox(height: 5,),
                       Center(child: customTextRegular(title: "Your Focused Projects",fontWeight: FontWeight.w400,fontSize: 16.w,color: AppColors.white)),
 
                     ],
                   ),
 
-                  GestureDetector(
-                    onTap: (){
-                    //  Get.to(()=>Done());
-                   //   Get.to(() => AnotherScreen(projectKey: ));
-                    },
-                    child: Container(
-                      height: 54.w,
-                      width: 54.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        // color: Colors.white,
-                        border: Border.all(color: AppColors.blue,width: 1),
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/nouman.png"),
-                          fit: BoxFit.fill
-                        ),
+                  Container(
+                    height: 54.w,
+                    width: 54.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // color: Colors.white,
+                      border: Border.all(color: AppColors.white,width: 1),
+
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/nouman.png"),
+                        fit: BoxFit.fill
                       ),
                     ),
+                  //  child: Icon(Icons.add,color: Colors.white,size: 30,),
                   ),
                 ],
               ),
@@ -335,71 +334,83 @@ class _HomeScreenState extends State<HomeScreen>with TickerProviderStateMixin {
         ),
       ),
 
-      floatingActionButton: SpeedDial(
-
-        speedDialChildren: <SpeedDialChild>[
-          SpeedDialChild(
-
-            closeSpeedDialOnPressed: true,
-            child: Icon(
-              Icons.add,
-              color: AppColors.primaryColor,
-            ),
-            foregroundColor: Colors.black,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 30,right: 4),
+        child: GestureDetector(
+          onTap: (){
+            Get.to(()=>CreateProjectScreen());
+          },
+          child: CircleAvatar(
             backgroundColor: Colors.white,
-
-            label: 'New Projects',
-
-            onPressed: () {
-                // Get.to(LetsGoScreen());
-                Get.to(()=> CreateProjectScreen());
-            },
-          ),
-          SpeedDialChild(
-            closeSpeedDialOnPressed: true,
-            child: const Icon(
-              Icons.contact_phone_rounded,
-              color:AppColors.primaryColor,
-            ),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.white,
-            label: 'Contacts',
-            onPressed: () {
-              // setState(() {
-              //   Get.to(breakScreen());
-              // });
-            },
-          ),
-          SpeedDialChild(
-
-            closeSpeedDialOnPressed: false,
-            child: Icon(
-              Icons.person_outline,
-              color: AppColors.primaryColor,
-            ),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.white,
-            label: 'Profile',
-            onPressed: () {
-            //  Get.to(project_details());
-            },
-          ),
-        ],
-        labelsStyle: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Tillana-Bold', fontSize: 15.sp,),
-
-        labelsBackgroundColor: AppColors.white,
-        closedForegroundColor: AppColors.blackColor,
-        openForegroundColor: AppColors.blackColor,
-        closedBackgroundColor: Colors.white,
-        openBackgroundColor: Colors.white,
-        child: Icon(
-          Icons.more_vert,
-          size: 40,
-          color: AppColors.blue,
+              radius: 30,
+              child: Icon(Icons.add,color: Colors.blue,size: 30,)),
         ),
       ),
+      // floatingActionButton: SpeedDial(
+      //
+      //   speedDialChildren: <SpeedDialChild>[
+      //     SpeedDialChild(
+      //
+      //       closeSpeedDialOnPressed: true,
+      //       child: Icon(
+      //         Icons.add,
+      //         color: AppColors.primaryColor,
+      //       ),
+      //       foregroundColor: Colors.black,
+      //       backgroundColor: Colors.white,
+      //
+      //       label: 'New Projects',
+      //
+      //       onPressed: () {
+      //           // Get.to(LetsGoScreen());
+      //           Get.to(()=> CreateProjectScreen());
+      //       },
+      //     ),
+      //     SpeedDialChild(
+      //       closeSpeedDialOnPressed: true,
+      //       child: const Icon(
+      //         Icons.contact_phone_rounded,
+      //         color:AppColors.primaryColor,
+      //       ),
+      //       foregroundColor: Colors.white,
+      //       backgroundColor: Colors.white,
+      //       label: 'Contacts',
+      //       onPressed: () {
+      //         // setState(() {
+      //         //   Get.to(breakScreen());
+      //         // });
+      //       },
+      //     ),
+      //     SpeedDialChild(
+      //
+      //       closeSpeedDialOnPressed: false,
+      //       child: Icon(
+      //         Icons.person_outline,
+      //         color: AppColors.primaryColor,
+      //       ),
+      //       foregroundColor: Colors.white,
+      //       backgroundColor: Colors.white,
+      //       label: 'Profile',
+      //       onPressed: () {
+      //       //  Get.to(project_details());
+      //       },
+      //     ),
+      //   ],
+      //   labelsStyle: TextStyle(
+      //       color: Colors.black,
+      //       fontFamily: 'Tillana-Bold', fontSize: 15.sp,),
+      //
+      //   labelsBackgroundColor: AppColors.white,
+      //   closedForegroundColor: AppColors.blackColor,
+      //   openForegroundColor: AppColors.blackColor,
+      //   closedBackgroundColor: Colors.white,
+      //   openBackgroundColor: Colors.white,
+      //   child: Icon(
+      //     Icons.more_vert,
+      //     size: 40,
+      //     color: AppColors.blue,
+      //   ),
+      // ),
     );
   }
   void _navigateToProjectDetail(BuildContext context,String title) {

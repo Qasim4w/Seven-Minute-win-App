@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:seven_min_track/utils/app_constant.dart';
-import 'package:seven_min_track/view/lets_start/lets_start.dart';
 import 'package:seven_min_track/widgets/custom_text_widgets.dart';
+
+import '../Home Screen/lets_start/lets_start.dart';
+import '../Home Screen/select_project.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -15,8 +17,20 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState(){
     super.initState();
     Future.delayed(const Duration (seconds: 2), () {
-     Get.to(()=> LetsStart());
+
+      String? storedName = HiveBoxes.nameBox.get('nameKey');
+
+      if (storedName != null && storedName.isNotEmpty) {
+        // Name is already set in the Hive database, navigate to SelectProject screen
+        Get.to(() => SelctProject());
+      } else {
+        // Name is not set in the Hive database, navigate to LetsStart screen after delay
+        Future.delayed(const Duration(seconds: 2), () {
+          Get.to(() => LetsStart());
+        });
+      }
     });
+    //  Get.to(()=> LetsStart());
   }
 
   @override

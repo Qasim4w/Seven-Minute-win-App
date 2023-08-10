@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:seven_min_track/utils/app_colors.dart';
 import 'package:seven_min_track/view/Home%20Screen/home_screen.dart';
+import '../../main.dart';
 import '../../widgets/custom_text_widgets.dart';
-import '../new-login/signin_button.dart';
-import '../new-login/tracking_input.dart';
+
 import 'otp_screen.dart';
 class ResetPasswardScreen extends StatelessWidget {
   //const ForgotPasswardScreen.ForgotPassward({super.key});
